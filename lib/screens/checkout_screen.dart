@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
+import '../services/order_service.dart';
 import '../theme/app_theme.dart';
 
 class CheckoutScreen extends StatelessWidget {
@@ -203,8 +204,13 @@ class CheckoutScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  // Show success dialog and pop to home
+                onPressed: () async {
+                  final cart = context.read<CartProvider>();
+                  if (cart.items.isEmpty) return;
+
+                  await OrderService.instance.placeOrder(cart.items, cart.total);
+                  cart.clearCart();
+
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
@@ -236,15 +242,7 @@ class CheckoutScreen extends StatelessWidget {
                       actions: [
                         TextButton(
                           onPressed: () {
-                            // Clear cart and go home
-                            context
-                                .read<CartProvider>()
-                                .items
-                                .clear(); // Need to add clear method or just access items to clear, wait cart provider items list is private.
-                            // Actually best to clear via a proper method, but for now we just pop to home.
-                            Navigator.of(
-                              context,
-                            ).popUntil((route) => route.isFirst);
+                            Navigator.of(context).popUntil((route) => route.isFirst);
                           },
                           child: const Text('Back to Home'),
                         ),

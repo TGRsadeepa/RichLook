@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "285538079392",
+    "project_id": "richlooknew-487ee",
+    "storage_bucket": "richlooknew-487ee.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285538079392:android:9d3e061297208909b96fc5",
+        "android_client_info": {
+          "package_name": "com.richlook.fashion_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC02kUrI8MsUOUKA5sZtEjJPvyHos4Xu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

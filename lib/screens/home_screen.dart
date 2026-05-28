@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'product_detail_screen.dart';
 import 'cart_screen.dart';
 import '../models/product.dart';
-import '../data/mock_data.dart';
 import '../providers/cart_provider.dart';
+import '../providers/product_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/product_card.dart';
 import '../widgets/category_chip.dart';
@@ -31,14 +31,28 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   List<Product> get _filteredProducts {
-    if (_selectedCategory == 'All') return mockProducts;
-    return mockProducts.where((p) => p.category == _selectedCategory).toList();
+    final products = context.read<ProductProvider>().products;
+    if (_selectedCategory == 'All') return products;
+    return products.where((p) => p.category == _selectedCategory).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    final productProvider = context.watch<ProductProvider>();
+
     return Scaffold(
-      body: IndexedStack(
+      body: productProvider.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : productProvider.error != null
+              ? Center(
+                  child: Text(
+                    'Error loading products:\n${productProvider.error}',
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              : productProvider.products.isEmpty
+                  ? const Center(child: Text('No products available yet.'))
+                  : IndexedStack(
         index: _bottomNavIndex,
         children: [
           _buildHomeTab(),

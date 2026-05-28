@@ -13,4 +13,16 @@ class CartItem {
     required this.selectedSize,
     required this.selectedColor,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'productId': product.id,
+      'name': product.name,
+      'imageUrl': product.imageUrl,
+      'price': product.price,
+      'quantity': quantity,
+      'selectedSize': selectedSize,
+      'selectedColor': selectedColor.value,
+    };
+  }
 }

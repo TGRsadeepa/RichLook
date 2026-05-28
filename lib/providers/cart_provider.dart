@@ -44,6 +44,11 @@ class CartProvider with ChangeNotifier {
     }
   }
 
+  void clearCart() {
+    _items.clear();
+    notifyListeners();
+  }
+
   double get subtotal {
     return _items.fold(
       0,
